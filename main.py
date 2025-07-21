@@ -59,12 +59,12 @@ def run_point_to_point_test(sim, controller, points, hold_time=0.1):
                 
 
         # Hold for stability
-        if reached:
-            while sim.sim_data.time - reached_time < hold_time:
-                controller.vel_cmd[:] = 0.0
+        #if reached:
+        #    while sim.sim_data.time - reached_time < hold_time:
+        #        controller.vel_cmd[:] = 0.0
 
                 
-                sleep(0.01)
+        #        sleep(0.01)
 
         controller.running_traj = False
         print(f"[Reached] Target {i}")
