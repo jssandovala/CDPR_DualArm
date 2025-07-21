@@ -558,9 +558,9 @@ class Controller:
         #print("")
 
   
-        Kp = np.diag([1, 1, 1, 1, 1, 1])
+        #Kp = np.diag([1, 1, 1, 1, 1, 1])
         #Kp = np.diag([0.5, 0.5, 0.5, 0.5, 0.5, 0.5])
-        #Kp = np.diag([1.5, 1.5, 1.5, 1.5, 1.5, 1.5])
+        Kp = np.diag([1.5, 1.5, 1.5, 1.5, 1.5, 1.5])
         norm_error = np.linalg.norm(pose_error)
         gain_scale = np.clip(norm_error, 0.4, 1)
         Kp_scaled = gain_scale * Kp

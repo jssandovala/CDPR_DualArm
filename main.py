@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 
 
 
-def run_point_to_point_test(sim, controller, points, hold_time=0.1):
+def run_point_to_point_test(sim, controller, points, hold_time=0.2):
 
     controller.error_history = []
     controller.time_history = []
