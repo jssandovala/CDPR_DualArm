@@ -1,0 +1,62 @@
+<mujoco>
+  <asset>
+    <material class="ur10e" name="black" rgba="0.033 0.033 0.033 1"/>
+    <material class="ur10e" name="jointgray" rgba="0.278 0.278 0.278 1"/>
+    <material class="ur10e" name="linkgray" rgba="0.82 0.82 0.82 1"/>
+    <material class="ur10e" name="urblue" rgba="0.49 0.678 0.8 1"/>
+
+    <mesh file="base_0.obj"/>
+    <mesh file="base_1.obj"/>
+    <mesh file="shoulder_0.obj"/>
+    <mesh file="shoulder_1.obj"/>
+    <mesh file="shoulder_2.obj"/>
+    <mesh file="upperarm_0.obj"/>
+    <mesh file="upperarm_1.obj"/>
+    <mesh file="upperarm_2.obj"/>
+    <mesh file="upperarm_3.obj"/>
+    <mesh file="forearm_0.obj"/>
+    <mesh file="forearm_1.obj"/>
+    <mesh file="forearm_2.obj"/>
+    <mesh file="forearm_3.obj"/>
+    <mesh file="wrist1_0.obj"/>
+    <mesh file="wrist1_1.obj"/>
+    <mesh file="wrist1_2.obj"/>
+    <mesh file="wrist2_0.obj"/>
+    <mesh file="wrist2_1.obj"/>
+    <mesh file="wrist2_2.obj"/>
+    <mesh file="wrist3.obj"/>
+  </asset>
+  <worldbody>
+    <body name="MP" pos="0 0 1.5">
+      <site name="mp_center" type="sphere" pos="0 0 0" size="0.01" rgba="1 1 0 1"/>
+      <joint type="slide" name="mp_joint_1" axis="1 0 0" damping="1e3"/>
+      <joint type="slide" name="mp_joint_2" axis="0 1 0" damping="1e3"/>
+      <joint type="slide" name="mp_joint_3" axis="0 0 1" damping="1e3"/>
+      <joint type="hinge" name="mp_joint_4" axis="1 0 0" damping="1e6"/>
+      <joint type="hinge" name="mp_joint_5" axis="0 1 0" damping="1e6"/>
+      <joint type="hinge" name="mp_joint_6" axis="0 0 1" damping="1e6"/>
+      <geom name="mp_frame" type="box" size="0.1950 0.13 0.105" pos="0 0 0" rgba="1 1 1 1"/>
+      <site name="mp_ei_1" type="sphere" size="0.01" pos="-0.1950 -0.13 -0.105" rgba="1 1 0 1"/>
+      <site name="mp_ei_2" type="sphere" size="0.01" pos="0.1950 -0.13 -0.105" rgba="1 1 0 1"/>
+      <site name="mp_ei_3" type="sphere" size="0.01" pos="0.1950 0.13 -0.105" rgba="1 1 0 1"/>
+      <site name="mp_ei_4" type="sphere" size="0.01" pos="-0.1950 0.13 -0.105" rgba="1 1 0 1"/>
+      <site name="mp_ei_5" type="sphere" size="0.01" pos="-0.1950 -0.13 0.105" rgba="1 1 0 1"/>
+      <site name="mp_ei_6" type="sphere" size="0.01" pos="0.1950 -0.13 0.105" rgba="1 1 0 1"/>
+      <site name="mp_ei_7" type="sphere" size="0.01" pos="0.1950 0.13 0.105" rgba="1 1 0 1"/>
+      <site name="mp_ei_8" type="sphere" size="0.01" pos="-0.1950 0.13 0.105" rgba="1 1 0 1"/>
+      <inertial mass="10.0" diaginertia="1 1 1" pos="0 0 0"/>
+<!--<inertial mass="1e-3" diaginertia="1e-4 1e-4 1e-4" pos="0 0 0"/>-->
+      <body name="arm_orbit_link" pos="0 0 -0.19">
+        <inertial mass="10" diaginertia="0.432 0.432 0.0005" pos="0 0 0"/>
+        <joint name="arm_orbit_joint" type="hinge" axis="0 0 1" damping = "1e3"/>
+        <geom name="arm_orbit_geom" type="capsule" size="0.01" fromto="0 0 0 0.7 0 0" rgba="0.5 0.5 0.5 1"/>
+        <body name="arm_mount" pos="0.7 0 0.0" quat="0 1 0 0">
+          <include file="ur10_arm.xml"/>
+        </body>
+      </body>
+      <!--<body name="arm_mount" pos="0.7 0 -0.19" quat="0 1 0 0">
+        <include file="ur10_arm.xml"/>
+      </body>-->
+    </body>
+  </worldbody>
+</mujoco>

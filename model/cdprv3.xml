@@ -1,0 +1,127 @@
+<mujoco>
+  <include file="cdprv3_mp.xml"/>
+  <include file="cdprv3_cables.xml"/>
+  <include file="scene.xml"/>
+  <compiler autolimits="true"/>
+  <default>
+    <site type="sphere" rgba="1 0 0 1" size="0.005"/>
+    <tendon rgba="0 1 0 1"/>
+    <default class="ur10e">
+      <material specular="0.5" shininess="0.25"/>
+      <joint axis="0 1 0" range="-6.28319 6.28319" armature="0.1"/>
+      <position ctrlrange="-6.2831 6.2831"/>
+      <general biastype="affine" ctrlrange="-6.2831 6.2831" gainprm="5000" biasprm="0 -5000 -500"/>
+      <default class="size4">
+        <joint damping="10"/>
+        <general forcerange="-330 330"/>
+      </default>
+      <default class="size3">
+        <joint damping="5"/>
+        <general forcerange="-150 150"/>
+        <default class="size3_limited">
+          <joint range="-3.1415 3.1415"/>
+          <general ctrlrange="-3.1415 3.1415"/>
+        </default>
+      </default>
+      <default class="size2">
+        <joint damping="2"/>
+        <general forcerange="-56 56"/>
+      </default>
+      <default class="visual">
+        <geom type="mesh" contype="0" conaffinity="0" group="2"/>
+      </default>
+      <default class="collision">
+        <geom type="capsule" group="3"/>
+        <default class="eef_collision">
+          <geom type="cylinder"/>
+        </default>
+      </default>
+      <site size="0.001" rgba="0.5 0.5 0.5 0.3" group="4"/>
+    </default>
+  </default>
+  <visual>
+    <headlight diffuse=".7 .7 .7"/>
+  </visual>
+  <!--
+  <actuator>
+    <velocity name="mp_joint_1" joint="mp_joint_1" ctrlrange="-20 20" kv="1e7"/>
+    <velocity name="mp_joint_2" joint="mp_joint_2" ctrlrange="-20 20" kv="1e7"/>
+    <velocity name="mp_joint_3" joint="mp_joint_3" ctrlrange="-20 20" kv="1e7"/>
+    <velocity name="mp_joint_4" joint="mp_joint_4" ctrlrange="-20 20" kv="1e7"/>
+    <velocity name="mp_joint_5" joint="mp_joint_5" ctrlrange="-20 20" kv="1e7"/>
+    <velocity name="mp_joint_6" joint="mp_joint_6" ctrlrange="-20 20" kv="1e7"/>
+  </actuator>
+  -->
+  <actuator>
+    <velocity name="rope_1_vel" tendon="rope_1" ctrlrange="-1 1" kv="1e6" />
+    <velocity name="rope_2_vel" tendon="rope_2" ctrlrange="-1 1" kv="1e6" />
+    <velocity name="rope_3_vel" tendon="rope_3" ctrlrange="-1 1" kv="1e6" />
+    <velocity name="rope_4_vel" tendon="rope_4" ctrlrange="-1 1" kv="1e6" />
+    <velocity name="rope_5_vel" tendon="rope_5" ctrlrange="-1 1" kv="1e6" />
+    <velocity name="rope_6_vel" tendon="rope_6" ctrlrange="-1 1" kv="1e6" />
+    <velocity name="rope_7_vel" tendon="rope_7" ctrlrange="-1 1" kv="1e6" />
+    <velocity name="rope_8_vel" tendon="rope_8" ctrlrange="-1 1" kv="1e6" />
+
+    <velocity joint="arm_orbit_joint" kv="1e5" gear="1" ctrlrange="-0.5 0.5"  />
+    <velocity joint="shoulder_pan_joint" kv="1e7" gear="1" />
+    <velocity joint="shoulder_lift_joint" kv="1e7" gear="1" />
+    <velocity joint="elbow_joint" kv="1e7" gear="1" />
+    <velocity joint="wrist_1_joint" kv="1e7" gear="1"  />
+    <velocity joint="wrist_2_joint" kv="1e7" gear="1" />
+    <velocity joint="wrist_3_joint" kv="1e7" gear="1" />
+
+
+    
+
+
+  </actuator>
+
+
+  <sensor>
+    <velocimeter name="mp_vel" site="mp_center"/>
+    <gyro name="mp_gyro" site="mp_center"/>
+    <force name="tension1" site="mp_ei_1"/>
+    <force name="tension2" site="mp_ei_2"/>
+    <force name="tension3" site="mp_ei_3"/>
+    <force name="tension4" site="mp_ei_4"/>
+    <force name="tension5" site="mp_ei_5"/>
+    <force name="tension6" site="mp_ei_6"/>
+    <force name="tension7" site="mp_ei_7"/>
+    <force name="tension8" site="mp_ei_8"/>
+    
+  </sensor>
+  <tendon>
+    <spatial name="rope_1" width="0.001" stiffness="0">
+      <site site="ai_site_1"/>
+      <site site="mp_ei_1"/>
+    </spatial>
+    <spatial name="rope_2" width="0.001" stiffness="0">
+      <site site="ai_site_2"/>
+      <site site="mp_ei_2"/>
+    </spatial>
+    <spatial name="rope_3" width="0.001" stiffness="0">
+      <site site="ai_site_3"/>
+      <site site="mp_ei_3"/>
+    </spatial>
+    <spatial name="rope_4" width="0.001" stiffness="0">
+      <site site="ai_site_4"/>
+      <site site="mp_ei_4"/>
+    </spatial>
+    <spatial name="rope_5" width="0.001" stiffness="0">
+      <site site="ai_site_5"/>
+      <site site="mp_ei_5"/>
+    </spatial>
+    <spatial name="rope_6" width="0.001" stiffness="0">
+      <site site="ai_site_6"/>
+      <site site="mp_ei_6"/>
+    </spatial>
+    <spatial name="rope_7" width="0.001" stiffness="0">
+      <site site="ai_site_7"/>
+      <site site="mp_ei_7"/>
+    </spatial>
+    <spatial name="rope_8" width="0.001" stiffness="0">
+      <site site="ai_site_8"/>
+      <site site="mp_ei_8"/>
+    </spatial>
+  </tendon>
+</mujoco>

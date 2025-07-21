@@ -1,0 +1,28 @@
+<mujoco>
+  <worldbody>
+    <body name="root_ball_1" pos="-3.2442 -1.3808 3.1877">
+      <site name="ai_site_1" type="sphere" pos="0 0 0" size="0.05" rgba="1 0 0 1"/>
+    </body>
+    <body name="root_ball_2" pos="3.2442 -1.3808 3.1877">
+      <site name="ai_site_2" type="sphere" pos="0 0 0" size="0.05" rgba="1 0 0 1"/>
+    </body>
+    <body name="root_ball_3" pos="3.2442 1.3808 3.1877">
+      <site name="ai_site_3" type="sphere" pos="0 0 0" size="0.05" rgba="1 0 0 1"/>
+    </body>
+    <body name="root_ball_4" pos="-3.2442 1.3808 3.1877">
+      <site name="ai_site_4" type="sphere" pos="0 0 0" size="0.05" rgba="1 0 0 1"/>
+    </body>
+    <body name="root_ball_5" pos="-2.8192 -1.7441 3.1877">
+      <site name="ai_site_5" type="sphere" pos="0 0 0" size="0.05" rgba="1 0 0 1"/>
+    </body>
+    <body name="root_ball_6" pos="2.8192 -1.7441 3.1877">
+      <site name="ai_site_6" type="sphere" pos="0 0 0" size="0.05" rgba="1 0 0 1"/>
+    </body>
+    <body name="root_ball_7" pos="2.8192 1.7441 3.1877">
+      <site name="ai_site_7" type="sphere" pos="0 0 0" size="0.05" rgba="1 0 0 1"/>
+    </body>
+    <body name="root_ball_8" pos="-2.8192 1.7441 3.1877">
+      <site name="ai_site_8" type="sphere" pos="0 0 0" size="0.05" rgba="1 0 0 1"/>
+    </body>
+  </worldbody>
+</mujoco>

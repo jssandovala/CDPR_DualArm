@@ -1,0 +1,78 @@
+<mujoco>
+  <compiler meshdir="asset" texturedir="asset"/>
+
+  <statistic meansize=".05"/>
+
+  <visual>
+    <rgba haze="0.15 0.25 0.35 1"/>
+    <quality shadowsize="4096"/>
+    <map stiffness="700" shadowscale="0.5" fogstart="1" fogend="15" zfar="40" haze="1"/>
+  </visual>
+
+  <asset>
+    <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="512"/>
+    <texture name="texplane" type="2d" builtin="checker" rgb1=".2 .3 .4" rgb2=".1 0.15 0.2"
+      width="512" height="512" mark="cross" markrgb=".8 .8 .8"/>
+
+    <material name="matplane" reflectance="0.3" texture="texplane" texrepeat="10 10" texuniform="true"/>
+    <material name="mat_black" rgba="0.4 0.8 0.9 1" specular="0.1" shininess="0.5"/>
+
+    <!--<mesh name="caroca" file="caroca_frame.obj"/>-->
+  </asset>
+
+  <worldbody>
+    <light diffuse=".4 .4 .4" specular="0.1 0.1 0.1" pos="0 0 2.0" dir="0 0 -1" castshadow="false"/>
+    <light directional="true" diffuse=".8 .8 .8" specular="0.2 0.2 0.2" pos="0 0 4" dir="0 0 -1"/>
+
+    <geom name="ground" type="plane" size="0 0 1" pos="0 0 0" quat="1 0 0 0" material="matplane" condim="1"/>
+    
+    
+    <!-- Target 0: identity orientation -->
+    <site name="target_pt_0" pos="0 0 0.5" size="0.01" rgba="1 1 1 0"/>
+    <geom type="capsule" fromto="0 0 0.5 -0.1 0 0.5" size="0.005" rgba="1 0 0 1"/>
+    <geom type="capsule" fromto="0 0 0.5 0 0.1 0.5" size="0.005" rgba="0 1 0 1"/>
+    <geom type="capsule" fromto="0 0 0.5 0 0 0.4" size="0.005" rgba="0 0 1 1"/>
+
+    <!-- Target 1: roll=1 -->
+    <site name="target_pt_1" pos="1 0 0.5" size="0.01" rgba="1 1 1 0"/>
+    <geom type="capsule" fromto="1 0 0.5 0.9 0 0.5" size="0.005" rgba="1 0 0 1"/>
+    <geom type="capsule" fromto="1 0 0.5 1 0.1 0.5" size="0.005" rgba="0 1 0 1"/>
+    <geom type="capsule" fromto="1 0 0.5 1 0 0.4" size="0.005" rgba="0 0 1 1"/>
+
+    <!-- Target 2: identity orientation 
+    <site name="target_pt_2" pos="-1 0.5 0.5" size="0.01" rgba="1 1 1 0"/>
+    <geom type="capsule" fromto="-1 0.5 0.5 -1.1 0.5 0.5" size="0.005" rgba="1 0 0 1"/>
+    <geom type="capsule" fromto="-1 0.5 0.5 -1 0.6 0.5" size="0.005" rgba="0 1 0 1"/>
+    <geom type="capsule" fromto="-1 0.5 0.5 -1 0.5 0.4" size="0.005" rgba="0 0 1 1"/>-->
+
+        <!-- Target 2: identity orientation -->
+    <site name="target_pt_2" pos="0 1 0.5" size="0.01" rgba="1 1 1 0"/>
+    <geom type="capsule" fromto="0 1 0.5 -0.1 1 0.5" size="0.005" rgba="1 0 0 1"/>
+    <geom type="capsule" fromto="0 1 0.5 0 1.1 0.5" size="0.005" rgba="0 1 0 1"/>
+    <geom type="capsule" fromto="0 1 0.5 0 1 0.4" size="0.005" rgba="0 0 1 1"/>
+
+    <!-- Target 4: roll=1 
+    <site name="target_pt_4" pos="0 1 1" size="0.01" rgba="1 1 1 0"/>
+    <geom type="capsule" fromto="0 1 1 0.1 1 1" size="0.005" rgba="1 0 0 1"/>
+    <geom type="capsule" fromto="0 1 1 0 1.1 1" size="0.005" rgba="0 1 0 1"/>
+    <geom type="capsule" fromto="0 1 1 0 1 1.1" size="0.005" rgba="0 0 1 1"/>
+    -->
+
+
+    <!--<site name="target_pt_5" pos="1.044 -0.274 0.823" type="sphere" size="0.03" rgba="1 0 0 0.8"/> --><!-- red marker -->
+
+
+    <!--
+
+    <body name="target_pt_5" pos="1.044 -0.274 0.823">
+      <geom type="sphere" size="0.03" rgba="1 0 0 0.8"/>
+    </body>
+    
+    <body name="cool_mesh" pos="0 0 0">
+      <geom type="mesh" mesh="caroca" material="mat_black" contype="0" conaffinity="0" mass="0" density="0" group="1"/>
+    </body>
+    -->
+
+
+  </worldbody>
+</mujoco>

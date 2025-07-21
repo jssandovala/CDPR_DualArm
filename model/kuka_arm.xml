@@ -1,0 +1,41 @@
+<body name="kuka_base" pos="0 0 0.1" >
+  <inertial pos="0 0 0" mass="1e-3" diaginertia="0.01 0.01 0.01"/>
+  <geom type="mesh" mesh="base"  rgba="1 0.4 0 1"/>
+  <body name="kuka_link_1" pos="0 0 0.11">
+    <inertial pos="0 0 -0.008" mass="1e-3" diaginertia="0.01 0.01 0.01"/>
+    <joint name="kuka_joint_1" type="hinge" axis="0 0 1" range="-2.967 2.967" limited="true" damping="0.01" armature="0.01"/>
+    <geom type="mesh" mesh="link_1" rgba="1 0.4 0 1"/>
+    <body name="kuka_link_2" pos="0 0 0.2005">
+      <inertial pos="0 0 0" mass="1e-3" diaginertia="0.01 0.01 0.01"/>
+      <joint name="kuka_joint_2" type="hinge" axis="0 -1 0" range="-2.094 2.094" limited="true" damping="0.01" armature="0.01" />
+      <geom type="mesh" mesh="link_2" rgba="1 0.4 0 1"/>
+      <body name="kuka_link_3" pos="0 0 0.20">
+        <inertial pos="0 0 -0.008" mass="1e-3" diaginertia="0.01 0.01 0.01"/>
+        <joint name="kuka_joint_3" type="hinge" axis="0 0 1" range="-2.967 2.967" limited="true" damping="0.01" armature="0.01"/>
+        <geom type="mesh" mesh="link_3" rgba="1 0.4 0 1"/>
+        <body name="kuka_link_4" pos="0 0 0.20">
+          <inertial pos="0 0 0" mass="1e-3" diaginertia="0.01 0.01 0.01"/>
+          <joint name="kuka_joint_4" type="hinge" axis="0 1 0" range="-2.094 2.094" limited="true" damping="0.01" armature="0.01"/>
+          <geom type="mesh" mesh="link_4" rgba="1 0.4 0 1"/>
+          <body name="kuka_link_5" pos="0 0 0.20">
+            <inertial pos="0 0 -0.008" mass="1e-3" diaginertia="0.01 0.01 0.01"/>
+            <joint name="kuka_joint_5" type="hinge" axis="0 0 1" range="-2.967 2.967" limited="true" damping="0.01" armature="0.01"/>
+            <geom type="mesh" mesh="link_5" rgba="1 0.4 0 1"/>
+            <body name="kuka_link_6" pos="0 0 0.19">
+              <inertial pos="0 0 0" mass="1e-3" diaginertia="0.01 0.01 0.01"/>
+              <joint name="kuka_joint_6" type="hinge" axis="0 -1 0" range="-2.094 2.094" limited="true" damping="0.01" armature="0.01"/>
+              <geom type="mesh" mesh="link_6" rgba="0.8 0.8 0.8 1"/>
+              <body name="kuka_link_7" pos="0 0 0.078">
+                <site name="ee_site" pos="0 0 0" size="0.005" rgba="1 0 0 1" type="sphere"/>
+
+                <inertial pos="0 0 0" mass="1e-3" diaginertia="0.01 0.01 0.01"/>
+                <joint name="kuka_joint_7" type="hinge" axis="0 0 1" range="-2.967 2.967" limited="true" damping="0.01" armature="0.01"/>
+                <geom type="mesh" mesh="link_7" rgba="0 0 0 1"/>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </body>
+</body>
