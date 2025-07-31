@@ -120,10 +120,11 @@ def commands(sim:Sim):
                 print("invalid format")
         
         elif cmd == "traj":
-            t = np.array([12,24,36])
+            t = np.array([3,6,9])
             pts = np.array([#[1.738,-0.250,0.730,-1.571,0,-2.142],
                             [0,0,0.5,0,np.pi,0],
                             [1,0,0.5,0,np.pi,0],
+                            [-1,0.5,0.5,0,np.pi,0],
                             [0,1,0.5,0,np.pi,0],
                             #[0,0,1.5,0,0,0],
                             #[0,1,1,0,0,0],

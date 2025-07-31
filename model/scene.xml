@@ -27,39 +27,31 @@
     <geom name="ground" type="plane" size="0 0 1" pos="0 0 0" quat="1 0 0 0" material="matplane" condim="1"/>
     
     
-    <!-- Target 0: identity orientation -->
+    <!-- Target 0: identity orientation first goal-->
     <site name="target_pt_0" pos="0 0 0.5" size="0.01" rgba="1 1 1 0"/>
-    <geom type="capsule" fromto="0 0 0.5 -0.1 0 0.5" size="0.005" rgba="1 0 0 1"/>
-    <geom type="capsule" fromto="0 0 0.5 0 0.1 0.5" size="0.005" rgba="0 1 0 1"/>
-    <geom type="capsule" fromto="0 0 0.5 0 0 0.4" size="0.005" rgba="0 0 1 1"/>
-
-    <!-- Target 1: roll=1 -->
+    <site type="capsule" fromto="0 0 0.5 -0.1 0 0.5" size="0.005" rgba="1 0 0 1" />
+    <site type="capsule" fromto="0 0 0.5 0 0.1 0.5" size="0.005" rgba="0 1 0 1" />
+    <site type="capsule" fromto="0 0 0.5 0 0 0.4" size="0.005" rgba="0 0 1 1" />
+    
+    <!-- Target 1: roll=1 second goal-->
     <site name="target_pt_1" pos="1 0 0.5" size="0.01" rgba="1 1 1 0"/>
-    <geom type="capsule" fromto="1 0 0.5 0.9 0 0.5" size="0.005" rgba="1 0 0 1"/>
-    <geom type="capsule" fromto="1 0 0.5 1 0.1 0.5" size="0.005" rgba="0 1 0 1"/>
-    <geom type="capsule" fromto="1 0 0.5 1 0 0.4" size="0.005" rgba="0 0 1 1"/>
+    <site type="capsule" fromto="1 0 0.5 0.9 0 0.5" size="0.005" rgba="1 0 0 1"/>
+    <site type="capsule" fromto="1 0 0.5 1 0.1 0.5" size="0.005" rgba="0 1 0 1"/>
+    <site type="capsule" fromto="1 0 0.5 1 0 0.4" size="0.005" rgba="0 0 1 1"/>
 
-    <!-- Target 2: identity orientation 
-    <site name="target_pt_2" pos="-1 0.5 0.5" size="0.01" rgba="1 1 1 0"/>
-    <geom type="capsule" fromto="-1 0.5 0.5 -1.1 0.5 0.5" size="0.005" rgba="1 0 0 1"/>
-    <geom type="capsule" fromto="-1 0.5 0.5 -1 0.6 0.5" size="0.005" rgba="0 1 0 1"/>
-    <geom type="capsule" fromto="-1 0.5 0.5 -1 0.5 0.4" size="0.005" rgba="0 0 1 1"/>-->
+    <!-- Target 2: identity orientation -->
+    <site name="target_pt_2" pos="-1 0.5 1.5" size="0.01" rgba="1 1 1 0"/>
+    <site type="capsule" fromto="-1 0.5 0.5 -1.1 0.5 0.5" size="0.005" rgba="1 0 0 1"/>
+    <site type="capsule" fromto="-1 0.5 0.5 -1 0.6 0.5" size="0.005" rgba="0 1 0 1"/>
+    <site type="capsule" fromto="-1 0.5 0.5 -1 0.5 0.4" size="0.005" rgba="0 0 1 1"/>
 
-        <!-- Target 2: identity orientation -->
-    <site name="target_pt_2" pos="0 1 0.5" size="0.01" rgba="1 1 1 0"/>
-    <geom type="capsule" fromto="0 1 0.5 -0.1 1 0.5" size="0.005" rgba="1 0 0 1"/>
-    <geom type="capsule" fromto="0 1 0.5 0 1.1 0.5" size="0.005" rgba="0 1 0 1"/>
-    <geom type="capsule" fromto="0 1 0.5 0 1 0.4" size="0.005" rgba="0 0 1 1"/>
-
-    <!-- Target 4: roll=1 
-    <site name="target_pt_4" pos="0 1 1" size="0.01" rgba="1 1 1 0"/>
-    <geom type="capsule" fromto="0 1 1 0.1 1 1" size="0.005" rgba="1 0 0 1"/>
-    <geom type="capsule" fromto="0 1 1 0 1.1 1" size="0.005" rgba="0 1 0 1"/>
-    <geom type="capsule" fromto="0 1 1 0 1 1.1" size="0.005" rgba="0 0 1 1"/>
-    -->
+        <!-- Target 2: identity orientation third goal-->
+    <site name="target_pt_3" pos="0 1 0.5" size="0.01" rgba="1 1 1 0"/>
+    <site type="capsule" fromto="0 1 0.5 -0.1 1 0.5" size="0.005" rgba="1 0 0 1"/>
+    <site type="capsule" fromto="0 1 0.5 0 1.1 0.5" size="0.005" rgba="0 1 0 1"/>
+    <site type="capsule" fromto="0 1 0.5 0 1 0.4" size="0.005" rgba="0 0 1 1"/>
 
 
-    <!--<site name="target_pt_5" pos="1.044 -0.274 0.823" type="sphere" size="0.03" rgba="1 0 0 0.8"/> --><!-- red marker -->
 
 
     <!--

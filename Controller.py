@@ -9,6 +9,7 @@ import mujoco
 from utils.traj_gen import *
 from utils.cdpr_utils import CableJacobian
 from scipy.spatial.transform import Rotation as R
+from scipy.sparse import csc_matrix
 
 class Controller:
 
@@ -76,7 +77,7 @@ class Controller:
         self.time_history = []
         self._ptp_start_time = None
 
-
+        self._ik_converged = False
 
         
 
@@ -445,7 +446,7 @@ class Controller:
         
             qin = self.sim.get_full_q_vector()
             qin_base = np.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
-            #qin_arm = np.array([0.0, -1, 1, 0, 1, 0])
+            #qin_arm = np.array([0.0, 0, -1, 0, 1, 0])
             qin_arm = qin[7:]
         
         
@@ -536,10 +537,10 @@ class Controller:
         #print("")
 
 
-        if pos_err_norm < 0.0001 and ang_err_norm < 0.02:
+        if pos_err_norm < 0.0001 and ang_err_norm < 0.0001:
             #print("[INFO] ✅ Converged.")
             self.vel_cmd[:9] = 0.0
-            self.vel_cmd[9:] = 0
+            self.vel_cmd[9:] = self.sim.hold_kuka_pose(q[7:])
 
 
 
@@ -597,12 +598,12 @@ class Controller:
 
 
         # --- Joint velocity limits ---
-        base_vel_min = np.array([-1, -1, -1, -1, -1, -1])
+        base_vel_min = np.array([-1, -1, -1, -0, -0, -0])
         orb_vel_min = np.array([-0.7])
         arm_vel_min = np.array([-1, -1, -1, -1, -1, -1])
         vel_min = np.concatenate((base_vel_min,orb_vel_min,arm_vel_min))
 
-        base_vel_max = np.array([1, 1, 1, 1, 1, 1])
+        base_vel_max = np.array([1, 1, 1, 0, 0, 0])
         orb_vel_max = np.array([0.7])
         arm_vel_max = np.array([1, 1, 1, 1, 1, 1])
         vel_max = np.concatenate((base_vel_max,orb_vel_max,arm_vel_max))
@@ -652,7 +653,7 @@ class Controller:
         f += -epsilon * (P.T @ P @ v_null)
 
 
-
+        
 
         try:
             #delta_q = solve_qp(H, f, lb=lb, ub=ub, solver="cvxopt")
