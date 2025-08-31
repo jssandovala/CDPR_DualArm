@@ -583,7 +583,7 @@ class Controller:
         else:
             desired_twist_normalized = desired_twist * 0  # or leave it unchanged
 
-        #added weight to penaliwe movement in certain joints of the system, in this case the rotation components of the moving platform, can be tuned
+        #added weight to penalize movement in certain joints of the system, in this case the rotation components of the moving platform, can be tuned
         W_joint = np.diag([0, 0, 0, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0])
 
         H = J.T @ J +W_joint
