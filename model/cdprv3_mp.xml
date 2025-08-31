@@ -29,6 +29,9 @@
   <worldbody>
     <body name="MP" pos="0 0 1.5">
       <site name="mp_center" type="sphere" pos="0 0 0" size="0.01" rgba="1 1 0 1"/>
+      <!--<geom type="capsule" fromto="0 0 0 0.3 0 0" size="0.004" rgba="1 0 0 1"/> 
+      <geom type="capsule" fromto="0 0 0 0 0.3 0" size="0.004" rgba="0 0 1 1"/> 
+      <geom type="capsule" fromto="0 0 0 0 0 0.3" size="0.004" rgba="0 1 0 1"/> -->
       <joint type="slide" name="mp_joint_1" axis="1 0 0" damping="1e3"/><!--originally 1e3 for the three translation joints-->
       <joint type="slide" name="mp_joint_2" axis="0 1 0" damping="1e3"/>
       <joint type="slide" name="mp_joint_3" axis="0 0 1" damping="1e3"/>
@@ -49,7 +52,7 @@
       <body name="arm_orbit_link" pos="0 0 -0.19">
         <inertial mass="10" diaginertia="0.432 0.432 0.0005" pos="0 0 0"/>
         <joint name="arm_orbit_joint" type="hinge" axis="0 0 1" damping = "1e3"/><!--originally 1e3 for the orbital joint-->
-        <geom name="arm_orbit_geom" type="capsule" size="0.01" fromto="0 0 0 0.7 0 0" rgba="0.5 0.5 0.5 1"/>
+        <site name="arm_orbit_geom" type="capsule" size="0.01" fromto="0 0 0 0.7 0 0" rgba="0.5 0.5 0.5 1"/>
         <body name="arm_mount" pos="0.7 0 0.0" quat="0 1 0 0">
           <include file="ur10_arm.xml"/>
         </body>

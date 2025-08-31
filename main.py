@@ -12,16 +12,19 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 
-
+#this function is to run the point to point test which is used when "ptp" is selected
 def run_point_to_point_test(sim, controller, points, hold_time=0.2):
 
-    controller.error_history = []
-    controller.time_history = []
+    #controller.error_history = []
+    #controller.time_history = []
     controller._ptp_start_time = None
     
 
     for i, pt in enumerate(points):
         print(f"\n[Target {i}] Going to:", pt)
+
+        controller.error_history = []
+        controller.time_history = []
 
         controller.update_targ(pt, np.zeros(6))
         controller.running_traj = True
@@ -52,6 +55,7 @@ def run_point_to_point_test(sim, controller, points, hold_time=0.2):
                 print("reached")
                 reached = True
                 reached_time = sim.sim_data.time
+                
                 print("moving towards: ",points)
 
                 
@@ -67,27 +71,28 @@ def run_point_to_point_test(sim, controller, points, hold_time=0.2):
         #        sleep(0.01)
 
         controller.running_traj = False
+        controller._ptp_start_time = None
         print(f"[Reached] Target {i}")
 
         
 
-        if i == 0:
+        #if i == 0:
             
 
-            errors = np.array(controller.error_history)
-            times = np.array(controller.time_history)
+        errors = np.array(controller.error_history)
+        times = np.array(controller.time_history)
 
-            if errors.ndim == 2 and len(times) == len(errors):
-                plt.figure()
-                plt.plot(times, errors[:, 0], label="Position Error (m)")
-                plt.plot(times, errors[:, 1], label="Orientation Error (rad)")
-                plt.xlabel("Time [s]")
-                plt.ylabel("Error")
-                plt.title("Pose Error Over Time (First PTP Target)")
-                plt.grid(True)
-                plt.legend()
-                plt.savefig("pose_error_ptp_0.png")
-                print("[INFO] Plot saved to pose_error_ptp_0.png")
+        if errors.ndim == 2 and len(times) == len(errors):
+            plt.figure()
+            plt.plot(times, errors[:, 0], label="Position Error (m)")
+            plt.plot(times, errors[:, 1], label="Orientation Error (rad)")
+            plt.xlabel("Time [s]")
+            plt.ylabel("Error")
+            plt.title(f"Pose Error Over Time (Target {i+1})")
+            plt.grid(True)
+            plt.legend()
+            plt.savefig(f"pose_error_ptp_{i+1}.png")
+            print(f"[INFO] Plot saved to pose_error_ptp_{i+1}.png")
 
 
 
@@ -120,12 +125,15 @@ def commands(sim:Sim):
                 print("invalid format")
         
         elif cmd == "traj":
-            t = np.array([3,6,9])
+            t = np.array([3,6,9,12,15])
+
+            #the targets that the end effector would reach
             pts = np.array([#[1.738,-0.250,0.730,-1.571,0,-2.142],
                             [0,0,0.5,0,np.pi,0],
-                            [1,0,0.5,0,np.pi,0],
-                            [-1,0.5,0.5,0,np.pi,0],
-                            [0,1,0.5,0,np.pi,0],
+                            [1,0,0.5,0,np.pi+1,0],
+                            [-1,0.5,0.5,-1,np.pi,0],
+                            [0,1,0.5,1,np.pi,0],
+                            [0,0,0.5,0,np.pi,0]
                             #[0,0,1.5,0,0,0],
                             #[0,1,1,0,0,0],
                             #[0,0,1,0,0,0]

@@ -453,6 +453,8 @@ class Controller:
         # --- Hold if not running ---
         if not self.running_traj:
 
+            #this is to send small velocity commands so that the robot remains in position before running the trajectory
+
             J_cdpr = CableJacobian(self.x_mes, self.model_dict)
             cable_vel = -J_cdpr @ (0.001*(qin_base-self.sim.get_full_q_vector()[:6]))
             #print(cable_vel)
@@ -472,13 +474,16 @@ class Controller:
         fext = np.zeros(6)
         fext[2] = -60 * 9.81  # Z gravity
 
-        success_T, tensions = bary_sol(q[:6], fext, self.model_dict)
+        success_T, tensions = bary_sol(q[:6], fext, self.model_dict) #this function checks if there is a valid tension distribution of the cables for a given pose of the mobile platform
         #print(success_T)
         if not success_T:
+            #if an invalid tension distribution is detected the movement will stop
             print("Invalid tension")
             print(tensions)
             self.running_traj = False
             return
+        
+        #forward kinematics of the system        
         #T_current = self.mujoco_forward_kinematics(q)
         T_current = self.compute_total_forward_kinematics(q)
         pos_current = T_current[:3, 3]
@@ -519,7 +524,7 @@ class Controller:
             t_now = self.sim.sim_data.time - self._ptp_start_time
 
 
-
+            #storing the error norm on a list to plot
             self.error_history.append([pos_err_norm, ang_err_norm])
             self.time_history.append(t_now)
         
@@ -536,7 +541,7 @@ class Controller:
 
         #print("")
 
-
+        #convergence check
         if pos_err_norm < 0.0001 and ang_err_norm < 0.0001:
             #print("[INFO] ✅ Converged.")
             self.vel_cmd[:9] = 0.0
@@ -550,7 +555,7 @@ class Controller:
             self._ik_converged = False
 
 
-
+        
         # --- Step 4: Solve QP to compute delta_q ---
         J = self.geometric_jacobian(q)
         #J = self.mujoco_jacobian(self.model, self.data, q)
@@ -558,7 +563,7 @@ class Controller:
         #print(f"[Jacobian] Condition number: {cond:.2e}")
         #print("")
 
-  
+        #different values of the proportional gain tested
         #Kp = np.diag([1, 1, 1, 1, 1, 1])
         #Kp = np.diag([0.5, 0.5, 0.5, 0.5, 0.5, 0.5])
         Kp = np.diag([1.5, 1.5, 1.5, 1.5, 1.5, 1.5])
@@ -571,13 +576,14 @@ class Controller:
         desired_twist = Kp@pose_error 
 
 
-
+        #normalize the desired velocity to make sure the end effector is able to reach the target, otherwise it would get too close but never fully converge
         twist_norm = np.linalg.norm(desired_twist)
         if twist_norm > 1e-6:  # avoid division by zero
             desired_twist_normalized = desired_twist / twist_norm
         else:
             desired_twist_normalized = desired_twist * 0  # or leave it unchanged
 
+        #added weight to penaliwe movement in certain joints of the system, in this case the rotation components of the moving platform, can be tuned
         W_joint = np.diag([0, 0, 0, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0])
 
         H = J.T @ J +W_joint
@@ -641,7 +647,7 @@ class Controller:
         ub = np.maximum(lb, ub)
 
         
-
+        #secondary objective to make sure that the system tries to stay in a centered position between the joint limits
         epsilon = 0.01
         P = np.eye(J.shape[1]) - np.linalg.pinv(J) @ J
         q0 = 0.5 * (q_min + q_max)           # preferred posture
@@ -675,6 +681,45 @@ class Controller:
         # Clip arm joint velocities
         delta_q = np.clip(delta_q, -vel_min, vel_max)
         
+        #the following commented section corresponds to an inverse kinematic solver using only the pseudoinverse; which is used to compare
+        """""
+        # --- Step 4 (REPLACEMENT): PSEUDOINVERSE IK (no QP) ---
+
+        J = self.geometric_jacobian(q)  
+        Kp = np.diag([1.5, 1.5, 1.5, 1.5, 1.5, 1.5])
+
+        # Use the un-normalized twist so the gain Kp sets the scale
+        desired_twist = Kp @ pose_error  # already computed above; keep as-is
+
+        twist_norm = np.linalg.norm(desired_twist)
+        if twist_norm > 1e-6:  # avoid division by zero
+            desired_twist_normalized = desired_twist / twist_norm
+        else:
+            desired_twist_normalized = desired_twist * 0  # or leave it unchanged
+
+        # Damped least-squares pseudoinverse: J^+ = J^T (J J^T + λ^2 I)^(-1)
+        lam = 1e-3  # small damping; increase (e.g., 1e-2) if near-singular
+        JJt = J @ J.T
+        J_pinv = J.T @ np.linalg.inv(JJt + (lam**2) * np.eye(J.shape[0]))
+
+        # Joint velocities from task twist
+        joint_velocities = J_pinv @ desired_twist_normalized
+
+        # --- Joint velocity limits ---
+        base_vel_min = np.array([-1, -1, -1, -0, -0, -0])
+        orb_vel_min = np.array([-0.7])
+        arm_vel_min = np.array([-1, -1, -1, -1, -1, -1])
+        vel_min = np.concatenate((base_vel_min,orb_vel_min,arm_vel_min))
+
+        base_vel_max = np.array([1, 1, 1, 0, 0, 0])
+        orb_vel_max = np.array([0.7])
+        arm_vel_max = np.array([1, 1, 1, 1, 1, 1])
+        vel_max = np.concatenate((base_vel_max,orb_vel_max,arm_vel_max))
+
+        # Enforce simple velocity limits by clipping (keeps your arrays above)
+        joint_velocities = np.maximum(joint_velocities, vel_min)
+        joint_velocities = np.minimum(joint_velocities, vel_max)
+        """""
         
 
         # --- CDPR and arm ---
@@ -702,7 +747,7 @@ class Controller:
 
 
     
-  
+    #function that executes the discretized trajectory when the option "disc" is chosen at the start, needs to be revised 
     def executeTrajectory(self, t, points, sim):
         self.sim = sim
         self.debug_mode = True
