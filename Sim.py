@@ -150,6 +150,9 @@ class Sim:
 
     #initial_joint_angles = [0.0, -1, 1, 1, -1, 1.5]  # in radians
     #initial_joint_angles = [0.0, 0, 0, 0.0, 0, 0.0]
+
+
+    #initial pose of the arm
     initial_joint_angles = [0.0, 0, -1, 0, 1, 0]
     
 
@@ -183,6 +186,9 @@ class Sim:
 
 
     self.sim_run = True
+
+
+  #this function serves to send small velocity commands to keep the arm in place when the trajectory is not running, otherwise gravity would bring it down
   def hold_kuka_pose(self, target_angles, kp=1.0, kd=0.0, max_vel=2.0):
       joint_names = [
         "shoulder_pan_joint", "shoulder_lift_joint",

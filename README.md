@@ -8,7 +8,7 @@ Once it launches, an input will appear in the terminal. Type `traj` to begin tra
 
 It will then ask for a type: `ptp` runs a direct point-to-point trajectory, while `disc` discretizes and interpolates between the points. The main control logic is in `Controller.py`, in the `update_cmd()` function, which handles QP-based inverse kinematics and velocity command generation. 
 
-The simulation loop is handled by the `Sim` class in `Sim.py`, which launches the viewer, collects sensor data, steps the simulation, and passes information to the controller.
+The simulation loop is handled by the `Sim` class in `Sim.py`, which launches the viewer, collects sensor data, steps the simulation, and passes information to the controller. In this same file the initial pose of the arm is defined in init_sim.
 
 General notes on adding a gripper to the end effector
 ------------------------------------------------
