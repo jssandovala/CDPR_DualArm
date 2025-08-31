@@ -19,8 +19,8 @@ the following generic steps apply (independent of gripper type):
 
 - Define a new body attached to the tool frame as the gripper base, on the ur10_arm.xml file.
 - Add the geometry/joints required for the chosen gripper mechanism
-    (e.g. hinge joints (revolute joints)for jaws, slide joint (prismatic joints)for a linear slider,
-    etc.). A damping could be added in the joint configuration, which will act as viscuous friction. This parameter can be tuned
+    e.g. hinge joints (revolute joints) for jaws, slide joint (prismatic joints) for a linear slider,
+    etc. A damping could be added in the joint configuration, which will act as viscuous friction. This parameter can be tuned
 - Include corresponding actuators (position, velocity, or torque)
     to drive these joints in the file cdpr.xml. When setting a velocity actuator, the main components to tune there is kv, which is tied to the responsiveness of the joint.
 
